@@ -1,4 +1,6 @@
-export const Message = () => {
+import PropTypes from 'prop-types';
+
+export const Message = ({ message }) => {
   return (
     /* TODO:
     1. Hover and Focus style for buttons
@@ -7,7 +9,7 @@ export const Message = () => {
      */
     <>
       <div className='bg-[#27ae60] p-4 rounded-lg max-w-[90%] m-auto self-start'>
-        <p className='mb-2 break-words text-white'>Hellloooooo!!</p>
+        <p className='mb-2 break-words text-white'>{message}</p>
         <p className='text-sm text-gray-200 italic mb-2'>Detected lanuage:</p>
       </div>
 
@@ -43,4 +45,8 @@ export const Message = () => {
       </div>
     </>
   );
+};
+
+Message.propTypes = {
+  message: PropTypes.string.isRequired,
 };
