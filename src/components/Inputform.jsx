@@ -29,7 +29,7 @@ export const Inputform = ({ onSubmit }) => {
         ></textarea>
         <button
           type='submit'
-          className='bg-[#27ae60] text-white rounded-full w-10 h-10 flex items-center justify-center self-center mb-2 cursor-pointer'
+          className='bg-[rgba(39,174,96,0.7)] text-white rounded-full w-10 h-10 flex items-center justify-center self-center mb-2 cursor-pointer'
         >
           <Send className='w-5 h-5' />
         </button>
