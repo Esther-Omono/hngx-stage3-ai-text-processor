@@ -19,7 +19,7 @@ export const Inputform = ({ onSubmit }) => {
     2. hover styles for button
     3. Style for disabled feature
     */
-    <footer className='border-t border-gray-200 p-4 bg-[#283335]'>
+    <footer className='p-4 bg-[#283335]'>
       <form onSubmit={handleSubmit} className='flex gap-2'>
         <textarea
           value={inputText}

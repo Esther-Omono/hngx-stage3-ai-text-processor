@@ -8,18 +8,18 @@ export const Message = ({ message }) => {
     3. Add aria labels for accesibility
      */
     <>
-      <div className='bg-[#27ae60] p-4 rounded-lg max-w-[90%] m-auto self-start'>
+      <div className='bg-[rgba(39,174,96,0.7)] p-4 rounded-lg max-w-[90%] m-auto self-start mb-4'>
         <p className='mb-2 break-words text-white'>{message}</p>
         <p className='text-sm text-gray-200 italic mb-2'>Detected lanuage:</p>
       </div>
 
       <div className='max-w-[90%] m-auto flex justify-between flex-wrap gap-4 my-4 md:flex-row'>
-        <button className='bg-[#27ae60] text-white py-2 px-4 rounded text-sm transition duration-300 cursor-pointer'>
+        <button className='bg-[rgba(39,174,96,0.7)] text-white py-2 px-4 rounded text-sm transition duration-300 cursor-pointer'>
           Summarize
         </button>
 
         <div className='flex gap-4 items-center flex-wrap md:flex-nowrap'>
-          <select className='p-2 text-white bg-[#27ae60] rounded text-sm flex-1 min-w-[120px] cursor-pointer'>
+          <select className='p-2 text-white bg-[rgba(39,174,96,0.7)] rounded text-sm flex-1 min-w-[120px] cursor-pointer'>
             <option>English</option>
             <option>Portuguese</option>
             <option>Spanish</option>
@@ -28,7 +28,7 @@ export const Message = ({ message }) => {
             <option>French</option>
           </select>
 
-          <button className='bg-[#27ae60] text-white py-2 px-4 rounded text-sm transition duration-300 cursor-pointer'>
+          <button className='bg-[rgba(39,174,96,0.7)] text-white py-2 px-4 rounded text-sm transition duration-300 cursor-pointer'>
             Translate
           </button>
         </div>
