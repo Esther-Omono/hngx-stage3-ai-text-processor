@@ -4,11 +4,11 @@ import { Inputform } from './components/Inputform';
 
 function App() {
   return (
-    <>
+    <div className='flex flex-col h-screen'>
       <Header />
       <Chatarea />
       <Inputform />
-    </>
+    </div>
   );
 }
 
