@@ -1,4 +1,4 @@
-export const languageOptions = {
+export const languageOptions =  {
     'en': 'English',
     'pt': 'Portuguese',
     'es': 'Spanish',

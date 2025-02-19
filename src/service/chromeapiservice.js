@@ -1,4 +1,4 @@
-import { languageOptions } from "../utils/languageUtil";
+import { languageOptions } from "../utils/languageutils";
 
 // Language Detector
 export const detectLang = async (text, callbacks) => {
