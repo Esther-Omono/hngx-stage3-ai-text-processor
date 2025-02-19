@@ -1,6 +1,21 @@
 import PropTypes from 'prop-types';
+import { detectLang } from '../service/chromeapiservice';
+import { useState, useEffect } from 'react';
 
-export const Message = ({ message }) => {
+export const Message = ({ message, content, detectedLang }) => {
+  const [detecting, setDetecting] = useState(false);
+  const [localDetectedLang, setLocalDetectedLang] = useState(detectedLang);
+
+  // Handle Language Detection
+  useEffect(() => {
+    const detectionCallbacks = {
+      setDetecting,
+      setDetectedLang: setLocalDetectedLang,
+    };
+
+    detectLang(content, detectionCallbacks);
+  }, [content]);
+
   return (
     /* TODO:
     1. Hover and Focus style for buttons
@@ -10,7 +25,9 @@ export const Message = ({ message }) => {
     <div className='mb-8'>
       <div className='bg-[rgba(39,174,96,0.7)] p-4 rounded-lg max-w-[90%] m-auto self-start mb-4'>
         <p className='mb-2 break-words text-white'>{message}</p>
-        <p className='text-sm text-gray-200 italic mb-2'>Detected lanuage:</p>
+        <p className='text-sm text-gray-200 italic mb-2'>
+          Detected lanuage: {detecting ? 'detecting...' : localDetectedLang}
+        </p>
       </div>
 
       <div className='max-w-[90%] m-auto flex justify-between flex-wrap gap-4 -my-2 md:flex-row'>
@@ -49,4 +66,6 @@ export const Message = ({ message }) => {
 
 Message.propTypes = {
   message: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  detectedLang: PropTypes.string,
 };
