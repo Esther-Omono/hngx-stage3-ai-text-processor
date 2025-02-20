@@ -1,10 +1,27 @@
 import PropTypes from 'prop-types';
-import { detectLang } from '../service/chromeapiservice';
+import { detectLang, translate } from '../service/chromeapiservice';
 import { useState, useEffect } from 'react';
 
-export const Message = ({ message, content, detectedLang }) => {
+export const Message = ({
+  message,
+  content,
+  detectedLang,
+  targetLanguage,
+  setTargetLanguage,
+}) => {
   const [detecting, setDetecting] = useState(false);
   const [localDetectedLang, setLocalDetectedLang] = useState(detectedLang);
+  const [translation, setTranslation] = useState('');
+  const [translating, setTranslating] = useState(false);
+
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'pt', name: 'Portuguese' },
+    { code: 'es', name: 'Spanish' },
+    { code: 'ru', name: 'Russian' },
+    { code: 'tr', name: 'Turkish' },
+    { code: 'fr', name: 'French' },
+  ];
 
   // Handle Language Detection
   useEffect(() => {
@@ -15,6 +32,30 @@ export const Message = ({ message, content, detectedLang }) => {
 
     detectLang(content, detectionCallbacks);
   }, [content]);
+
+  // Handle Translation
+  const handleTranslate = async () => {
+    if (!localDetectedLang || localDetectedLang === targetLanguage) {
+      console.error(
+        'Invalid translation request. Source and target languages are the same or missing.'
+      );
+      return;
+    }
+
+    try {
+      const translatedText = await translate({
+        detectedLangSymbol: localDetectedLang,
+        targetLanguage,
+        content,
+        setTranslating,
+      });
+
+      setTranslation(translatedText);
+    } catch (error) {
+      console.error('Translation failed: ', error);
+      setTranslation('Translation failed.');
+    }
+  };
 
   return (
     /* TODO:
@@ -36,17 +77,23 @@ export const Message = ({ message, content, detectedLang }) => {
         </button>
 
         <div className='flex gap-4 items-center flex-wrap md:flex-nowrap'>
-          <select className='p-2 text-white bg-[rgba(39,174,96,0.7)] rounded text-sm flex-1 min-w-[120px] cursor-pointer'>
-            <option>English</option>
-            <option>Portuguese</option>
-            <option>Spanish</option>
-            <option>Russian</option>
-            <option>Turkish</option>
-            <option>French</option>
+          <select
+            className='p-2 text-white bg-[rgba(39,174,96,0.7)] rounded text-sm flex-1 min-w-[120px] cursor-pointer'
+            value={targetLanguage}
+            onChange={(e) => setTargetLanguage(e.target.value)}
+          >
+            {languages.map((lang) => (
+              <option key={lang.code} value={lang.code}>
+                {lang.name}
+              </option>
+            ))}
           </select>
 
-          <button className='bg-[rgba(39,174,96,0.7)] text-white py-2 px-4 rounded text-sm transition duration-300 cursor-pointer'>
-            Translate
+          <button
+            onClick={handleTranslate}
+            className='bg-[rgba(39,174,96,0.7)] text-white py-2 px-4 rounded text-sm transition duration-300 cursor-pointer'
+          >
+            {translating ? 'Translating...' : 'Translate'}
           </button>
         </div>
       </div>
@@ -57,8 +104,10 @@ export const Message = ({ message, content, detectedLang }) => {
       </div>
 
       <div className='mt-6 p-4 max-w-[90%] m-auto bg-[#283335] rounded'>
-        <h3 className='text-sm font-medium text-gray-400 mb-1'>Translation</h3>
-        <p className='text-gray-300'>Translated Message</p>
+        <h3 className='text-sm font-medium text-gray-400 mb-1'>Translation:</h3>
+        <p className='text-gray-300'>
+          {translation || 'Translated message will appear here'}
+        </p>
       </div>
     </div>
   );
@@ -68,4 +117,7 @@ Message.propTypes = {
   message: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   detectedLang: PropTypes.string,
+  targetLanguage: PropTypes.string.isRequired,
+  setTargetLanguage: PropTypes.func.isRequired,
+  handleTranslate: PropTypes.func.isRequired,
 };
