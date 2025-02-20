@@ -7,9 +7,9 @@ export const Chatarea = ({ messages, targetLanguage, setTargetLanguage }) => {
       {messages.map((message) => (
         <Message
           key={message.id}
-          message={message.text}
+          message={message}
           content={message.text}
-          detectedLand={message.language}
+          detectedLang={message.language}
           targetLanguage={targetLanguage}
           setTargetLanguage={setTargetLanguage}
           translation={message.translation}
