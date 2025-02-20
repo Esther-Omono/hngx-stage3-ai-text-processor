@@ -1,4 +1,5 @@
 import { languageOptions } from '../utils/languageutils';
+import { toast } from 'react-toastify';
 
 // Language Detector
 export const detectLang = async (text, callbacks) => {
@@ -13,7 +14,7 @@ export const detectLang = async (text, callbacks) => {
   const available = (await ai.languageDetector.capabilities()).available;
 
   if (available === 'no') {
-    console.error('Sorry, your device does not support language detection');
+    toast.error('Sorry, your device does not support language detection');
     setDetecting(false);
     return;
   }
@@ -41,7 +42,7 @@ export const translate = async ({
   const available = (await ai.translator.capabilities()).available;
 
   if (available === 'no') {
-    console.error('Sorry, your device does not support translation');
+    toast.error('Sorry, your device does not support translation');
     return;
   }
 
@@ -76,14 +77,14 @@ export const summarize = async (text) => {
   try {
     const available = (await ai.summarizer.capabilities()).available;
     if (available === 'no') {
-      console.error('Summarization is not available on this device.');
+      toast.error('Summarization is not available on this device.');
       throw new Error('Summarization not supported.');
     }
     
     const response = await ai.summarizer.create({ format: 'plain-text', length: 'short' });
     return await response.summarize(text);
   } catch (error) {
-    console.error('Summarization failed:', error);
+    toast.error('Summarization failed:', error);
     throw error;
   }
 };
